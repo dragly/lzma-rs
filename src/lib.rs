@@ -10,11 +10,17 @@ pub mod error;
 use decode::lzbuffer::LZBuffer;
 use std::io;
 
+#[derive(Default)]
+pub struct LZOptions {
+    pub unpacked_size: Option<u64>,
+}
+
 pub fn lzma_decompress<R: io::BufRead, W: io::Write>(
     input: &mut R,
     output: &mut W,
+    options: &LZOptions,
 ) -> error::Result<()> {
-    let params = decode::lzma::LZMAParams::read_header(input)?;
+    let params = decode::lzma::LZMAParams::read_header(input, &options)?;
     let mut decoder = decode::lzma::new_circular(output, params)?;
     let mut rangecoder = decode::rangecoder::RangeDecoder::new(input).or_else(|e| {
         Err(error::Error::LZMAError(format!(
