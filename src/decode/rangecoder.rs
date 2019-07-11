@@ -30,7 +30,8 @@ where
 
     #[inline]
     pub fn is_finished_ok(&mut self) -> io::Result<bool> {
-        Ok(self.code == 0 && util::is_eof(self.stream)?)
+        //Ok(self.code == 0 && util::is_eof(self.stream)?)
+        Ok(self.code == 0)
     }
 
     #[inline]

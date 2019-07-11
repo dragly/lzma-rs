@@ -55,23 +55,25 @@ impl LZMAParams {
             dict_size_provided
         };
 
-        info!("Dict size: {}", dict_size);
+        println!("Dict size: {}", dict_size);
 
         // Unpacked size
-        let unpacked_size_provided = input.read_u64::<LittleEndian>().or_else(|e| {
-            Err(error::Error::LZMAError(format!(
-                "LZMA header too short: {}",
-                e
-            )))
-        })?;
-        let marker_mandatory: bool = unpacked_size_provided == 0xFFFF_FFFF_FFFF_FFFF;
-        let unpacked_size = if marker_mandatory {
-            None
-        } else {
-            Some(unpacked_size_provided)
-        };
+        //let unpacked_size_provided = input.read_u64::<LittleEndian>().or_else(|e| {
+            //Err(error::Error::LZMAError(format!(
+                //"LZMA header too short: {}",
+                //e
+            //)))
+        //})?;
+        //let marker_mandatory: bool = unpacked_size_provided == 0xFFFF_FFFF_FFFF_FFFF;
+        //let unpacked_size = if marker_mandatory {
+            //None
+        //} else {
+            //Some(unpacked_size_provided)
+        //};
 
-        info!("Unpacked size: {:?}", unpacked_size);
+        //println!("Unpacked size: {:?}", unpacked_size);
+        
+        let unpacked_size = Some(61203 * 4);
 
         let params = LZMAParams {
             lc: lc,
@@ -213,6 +215,8 @@ where
         rangecoder: &mut rangecoder::RangeDecoder<'a, R>,
     ) -> error::Result<()> {
         loop {
+            //println!("loop");
+
             if let Some(_) = self.unpacked_size {
                 if rangecoder.is_finished_ok()? {
                     break;
