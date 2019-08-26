@@ -320,11 +320,13 @@ where
 
         if let Some(len) = self.unpacked_size {
             if self.output.len() as u64 != len {
-                return Err(error::Error::LZMAError(format!(
+                println!(
+                //return Err(error::Error::LZMAError(format!(
                     "Expected unpacked size of {} but decompressed to {}",
                     len,
                     self.output.len()
-                )));
+                );
+                //)));
             }
         }
 
