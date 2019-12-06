@@ -57,7 +57,7 @@ impl LZMAParams {
             dict_size_provided
         };
 
-        println!("Dict size: {}", dict_size);
+        info!("Dict size: {}", dict_size);
 
         // Unpacked size
         let unpacked_size = match options.unpacked_size {
@@ -78,7 +78,7 @@ impl LZMAParams {
             Some(x) => Some(x)
         };
 
-        println!("Unpacked size: {:?}", unpacked_size);
+        info!("Unpacked size: {:?}", unpacked_size);
 
         let params = LZMAParams {
             lc: lc,
